@@ -4,6 +4,7 @@ import digit.web.models.*;
 import org.egov.common.contract.models.Address;
 import org.egov.common.contract.models.AuditDetails;
 import org.egov.common.contract.request.User;
+import org.egov.common.contract.models.Workflow;
 import org.egov.common.contract.user.enums.AddressType;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -40,6 +41,12 @@ public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthR
                         .lastModifiedTime(lastModifiedTime)
                         .build();
 
+                Workflow workflow=Workflow.builder().action(rs.getString("waction"))
+                        .comments(rs.getString("wcomment"))
+                        .assignes(Arrays.asList())
+                        .rating(rs.getInt("wrating"))
+                        .build();
+
                 birthRegistrationApplication = BirthRegistrationApplication.builder()
                         .applicationNumber(rs.getString("bapplicationnumber"))
                         .tenantId(rs.getString("btenantid"))
@@ -53,6 +60,7 @@ public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthR
                         .placeOfBirth(rs.getString("bplaceofbirth"))
                         .timeOfBirth(rs.getInt("btimeofbirth"))
                         .auditDetails(auditdetails)
+                        .workflow(workflow)
                         .build();
             }
             addChildrenToProperty(rs, birthRegistrationApplication);

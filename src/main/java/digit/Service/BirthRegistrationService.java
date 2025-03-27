@@ -95,8 +95,6 @@ public class BirthRegistrationService {
         applications.forEach(application -> {
             enrichmentUtil.enrichFatherApplicantOnSearch(application);
             enrichmentUtil.enrichMotherApplicantOnSearch(application);
-            System.out.println(workflowService.getCurrentWorkflow(requestInfo,application.getTenantId(),application.getApplicationNumber()));
-            System.out.println(application.getWorkflow());
         });
 
         // Otherwise return the found applications
